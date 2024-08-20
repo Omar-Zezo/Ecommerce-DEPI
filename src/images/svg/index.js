@@ -1,12 +1,15 @@
 import Cart from './cart.svg'
 import CartWhite from './cart-white.svg'
 import User from './user.svg'
+import UserWhite from './user-white.svg'
 import Search from './search.svg'
+import SearchWhite from './search-white.svg'
 import Menu from './menu.svg'
 import Close from './close.svg'
 import copyrightSign from './copyright-sign.svg'
 import Facebook from './facebook.svg'
 import Instagram from './instagram.svg'
 import Twitter from './twitter.svg'
+import Home from './home.svg'
 
-export {Cart, User, Search, CartWhite, Menu, Close, copyrightSign, Facebook, Instagram, Twitter}
+export {Cart, User, Search, SearchWhite, CartWhite, Menu, Close, copyrightSign, Facebook, Instagram, Twitter, Home, UserWhite}

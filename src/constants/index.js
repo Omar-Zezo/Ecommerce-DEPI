@@ -1,5 +1,5 @@
 import { Bags, Banner1, Banner2, Furniture, Jewellery, Kitchen, Laptops, Makeup, MenClothing, Mobile } from "../images/imgs"
-import { Facebook, Instagram, Twitter } from "../images/svg";
+import { CartWhite, Facebook, Home, Instagram, SearchWhite, Twitter, UserWhite } from "../images/svg";
 
 const navLinks = [
     {
@@ -8,23 +8,23 @@ const navLinks = [
     },
     {
         name: "Kitchen",
-        path: 'kitchen-accessories'
+        path: '/category/kitchen-accessories'
     },
     {
         name: "accessories",
-        path: 'mobile-accessories'
+        path: '/category/mobile-accessories'
     },
     {
         name: "laptops",
-        path: 'laptops'
+        path: '/category/laptops'
     },
     {
         name: "beauty",
-        path: "beauty"
+        path: "/category/beauty"
     },
     {
         name: "furniture",
-        path: "furniture"
+        path: "/category/furniture"
     },
 ]
 
@@ -89,12 +89,12 @@ export const footerLinks = [
     {
         title: "Categories",
         links: [
-            { name: "men watches", link: "/" },
-            { name: "Kitchen", link: "/" },
-            { name: "mobile", link: "/" },
-            { name: "laptops", link: "/" },
-            { name: "beauty", link: "/" },
-            { name: "furniture", link: "/" },
+            { name: "men watches", link: "/category/mens-watches" },
+            { name: "Kitchen", link: "/category/kitchen-accessories" },
+            { name: "mobile", link: "/category/mobile-accessories" },
+            { name: "laptops", link: "/category/laptops" },
+            { name: "beauty", link: "/category/beauty" },
+            { name: "furniture", link: "/category/furniture" },
         ],
     },
     {
@@ -124,4 +124,23 @@ export const socialMedia = [
 ];
 
 
-export {navLinks, mainSliderImgs, Categories}
+const navigationBar = [
+    {
+        name: "home",
+        icon: Home,
+        path: "/"
+    },
+    {
+        name: "cart",
+        icon: CartWhite,
+        path: "/cart"
+    },
+    {
+        name: "user",
+        icon: UserWhite,
+        path: "/profile"
+    },
+]
+
+
+export {navLinks, mainSliderImgs, Categories, navigationBar}

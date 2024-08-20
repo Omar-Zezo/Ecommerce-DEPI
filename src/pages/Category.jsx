@@ -31,7 +31,7 @@ const Category = () => {
         {
           allProducts ? (
             allProducts.map((product) => (
-              <ProductCard cardSize="w-[280px]" product={product} />
+              <ProductCard key={product.title} cardSize="w-[280px]" product={product} />
             ))
           ):null
         }

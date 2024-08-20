@@ -1,8 +1,9 @@
-import {GET_ALL_PRODUCTS, GET_ALL_PRODUCTS_CATEGORY} from '../types'
+import {GET_ALL_PRODUCTS, GET_ALL_PRODUCTS_CATEGORY, SEARCH_PRODUCTS} from '../types'
 
 const initState = {
     products: [],
-    productsByCategory: []
+    productsByCategory: [],
+    searchProducts:[]
 }
 
 
@@ -11,7 +12,9 @@ const productsReducer = (state = initState, action)=>{
         case GET_ALL_PRODUCTS:
             return {products : action.payload}
         case GET_ALL_PRODUCTS_CATEGORY:
-            return {productsByCategory: action.payload}    
+            return {productsByCategory: action.payload}
+        case SEARCH_PRODUCTS:
+            return {searchProducts: action.payload}        
         default:
             return state    
     }

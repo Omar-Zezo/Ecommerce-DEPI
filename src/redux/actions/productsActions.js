@@ -1,5 +1,5 @@
 import { baseURL } from '../../api/baseURL'
-import {GET_ALL_PRODUCTS, GET_ALL_PRODUCTS_CATEGORY} from '../types'
+import {GET_ALL_PRODUCTS, GET_ALL_PRODUCTS_CATEGORY, SEARCH_PRODUCTS} from '../types'
 
 export const getAllProducts = (str)=> async(dispatch)=>{
     try{
@@ -7,6 +7,16 @@ export const getAllProducts = (str)=> async(dispatch)=>{
         dispatch({type: GET_ALL_PRODUCTS, payload: res.data})
     }catch(err){
         dispatch({type: GET_ALL_PRODUCTS, payload: err.response})
+    }
+}
+
+
+export const getProductsSearch = (str)=> async(dispatch)=>{
+    try{
+        const res = await baseURL.get(`/products/search?${str}`)
+        dispatch({type: SEARCH_PRODUCTS, payload: res.data})
+    }catch(err){
+        dispatch({type: SEARCH_PRODUCTS, payload: err.response})
     }
 }
 

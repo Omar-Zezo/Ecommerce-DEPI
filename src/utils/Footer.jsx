@@ -3,8 +3,9 @@ import { footerLinks, socialMedia } from '../constants'
 import { LogoWhite } from '../images/imgs'
 import { copyrightSign } from '../images/svg'
 import { Link } from 'react-router-dom'
+import Navigation from './Navigation'
 
-const Footer = () => {
+const Footer = ({openSearch}) => {
   return (
     <footer className='bg-sky-950 padding-x padding-t pb-8 xl:p-10 py-10 px-5'>
         <div className='flex justify-between items-start gap-20 flex-wrap max-lg:flex-col'>
@@ -34,7 +35,7 @@ const Footer = () => {
                       {
                         section.links.map((link)=>(
                           <li key={link.name} className='mt-3 text-white-400 font-montserrat text-base leading-normal hover:text-slate-gray'>
-                            <Link to='' className='text-white capitalize hover:text-orange-500 duration-300'>{link.name}</Link>
+                            <Link to={link.link} className='text-white capitalize hover:text-orange-500 duration-300'>{link.name}</Link>
                           </li>
                         ))
                       }
@@ -52,6 +53,7 @@ const Footer = () => {
               </p>
               </div>
               <p className='font-montserrat text-lg cursor-pointer text-white'>Terms & Conditions</p>
+              <Navigation openSearch= {openSearch}/>
         </div>
     </footer>
   )
