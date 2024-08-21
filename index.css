@@ -36,6 +36,10 @@ body{
 }
 }
 
+.active{
+  color: rgb(249 115 22);
+}
+
 
 @layer components {
     .font-Urbanist{

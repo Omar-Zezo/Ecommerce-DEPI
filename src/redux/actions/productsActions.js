@@ -1,5 +1,5 @@
 import { baseURL } from '../../api/baseURL'
-import {GET_ALL_PRODUCTS, GET_ALL_PRODUCTS_CATEGORY, SEARCH_PRODUCTS} from '../types'
+import {ADD_PRODUCT, EDIT_PRODUCT, GET_ALL_PRODUCTS, GET_ALL_PRODUCTS_CATEGORY, SEARCH_PRODUCTS, DELETE_PRODUCT} from '../types'
 
 export const getAllProducts = (str)=> async(dispatch)=>{
     try{
@@ -9,6 +9,38 @@ export const getAllProducts = (str)=> async(dispatch)=>{
         dispatch({type: GET_ALL_PRODUCTS, payload: err.response})
     }
 }
+
+
+export const addProduct = (body)=> async(dispatch)=>{
+    try{
+        const config = {headers: { "Content-Type": "application/json" }}
+        const res = await baseURL.post(`/products/add`, body, config)
+        dispatch({type: ADD_PRODUCT, payload: res.data})
+    }catch(err){
+        dispatch({type: ADD_PRODUCT, payload: err.response})
+    }
+}
+
+
+export const editProduct = (id, body)=> async(dispatch)=>{
+    try{
+        const config = {headers: { "Content-Type": "application/json" }}
+        const res = await baseURL.put(`/products/${id}`, body, config)
+        dispatch({type: EDIT_PRODUCT, payload: res.data})
+    }catch(err){
+        dispatch({type: EDIT_PRODUCT, payload: err.response})
+    }
+}
+
+export const deleteProduct = (id)=> async(dispatch)=>{
+    try{
+        const res = await baseURL.delete(`/products/${id}`)
+        dispatch({type: DELETE_PRODUCT, payload: res.data})
+    }catch(err){
+        dispatch({type: DELETE_PRODUCT, payload: err.response})
+    }
+}
+
 
 
 export const getProductsSearch = (str)=> async(dispatch)=>{

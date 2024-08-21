@@ -138,7 +138,7 @@ const navigationBar = [
     {
         name: "user",
         icon: UserWhite,
-        path: "/profile"
+        path: "/login"
     },
 ]
 

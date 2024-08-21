@@ -1,14 +1,20 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Logo } from "../images/imgs";
 import { navLinks } from "../constants";
-import { Cart, Search, User, Close, Menu } from "../images/svg";
+import { Cart, Search, User, Close, Menu, Dashboard } from "../images/svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthUser } from "../redux/actions/authActions";
 
-const Navbar = ({openSearch, searchPage}) => {
+const Navbar = ({ openSearch, searchPage }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [dashboardImg, setDashboardImg] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
-  const navigate = useNavigate()
+  const authUserData = useSelector((state) => state.authReducer.getAuth);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +23,34 @@ const Navbar = ({openSearch, searchPage}) => {
       openSearch(false);
     }
   };
+
+  //get auth user
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getAuthUser(token));
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (authUserData) {
+      if (authUserData.data) {
+        if (authUserData.data.role === "admin") {
+          setDashboardImg(true);
+        }
+      }
+    }
+  }, [authUserData]);
+
+  // switch user and dashboard icon
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      setDashboardImg(true)
+    }else{
+      setDashboardImg(false)
+    }
+  }, [localStorage.getItem("token")])
 
   return (
     <div className="bg-white">
@@ -41,18 +75,19 @@ const Navbar = ({openSearch, searchPage}) => {
         <ul className="w-[50%] hidden xl:flex items-center justify-center gap-10">
           {navLinks.map((link) => (
             <li key={link.name}>
-              <Link
+              <NavLink
                 className="text-base uppercase font-bold zinc-800 hover:text-orange-500 duration-300"
                 to={link.path}
               >
                 {link.name}
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>
         <div className="w-[25%] xl:flex hidden justify-end items-center gap-5">
-          <div className="size-10 hover:bg-slate-100 cursor-pointer duration-300 rounded-full flex items-center justify-center"
-          onClick={() => openSearch(true)}
+          <div
+            className="size-10 hover:bg-slate-100 cursor-pointer duration-300 rounded-full flex items-center justify-center"
+            onClick={() => openSearch(true)}
           >
             <img width={23} src={Search} alt="search" />
           </div>
@@ -60,7 +95,15 @@ const Navbar = ({openSearch, searchPage}) => {
             <img width={25} src={Cart} alt="search" />
           </div>
           <div className="size-10 hover:bg-slate-100 cursor-pointer duration-300 rounded-full flex items-center justify-center">
-            <img width={25} src={User} alt="search" />
+            {dashboardImg ? (
+              <Link to={"/admin"}>
+                <img width={25} src={Dashboard} alt="search" />
+              </Link>
+            ) : (
+              <Link to={"/login"}>
+                <img width={25} src={User} alt="search" />
+              </Link>
+            )}
           </div>
         </div>
         {/* mobile menu */}
@@ -78,13 +121,16 @@ const Navbar = ({openSearch, searchPage}) => {
           />
           <img width={150} src={Logo} alt="logo" className="mt-10" />
           <ul className="flex flex-col items-center gap-5">
-            {
-              navLinks.map(link=>(
-              <li key={link.name} className="text-zinc-900 text-xl pb-2 border-b border-zinc-900 font-Josefin">
-                <Link to={link.path} onClick={() => setShowMenu(false)}>{link.name}</Link>
+            {navLinks.map((link) => (
+              <li
+                key={link.name}
+                className="text-zinc-900 text-xl pb-2 border-b border-zinc-900 font-Josefin"
+              >
+                <NavLink to={link.path} onClick={() => setShowMenu(false)}>
+                  {link.name}
+                </NavLink>
               </li>
-              ))
-            }
+            ))}
           </ul>
         </div>
         {/* Search Page */}

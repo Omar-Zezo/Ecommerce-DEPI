@@ -44,7 +44,7 @@ const SearchPage = () => {
 
 
   return (
-    <div className="min-h-screen w-[95%] px-5 py-10 mx-auto">
+    <div className="min-h-screen w-[95%] py-10 mx-auto">
       {/* <SortPosts
         sortBy={sortBy}
         order={order}
