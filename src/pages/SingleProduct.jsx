@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getSingleProduct } from "../redux/actions/productsActions";
+
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,26 +13,27 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Navigation } from "swiper/modules";
-import { CartWhite } from "../images/svg";
 
 const SingleProduct = () => {
   const [singleProduct, setSingleProduct] = useState([]);
 
+  const singleProductData = useSelector(state=>state.productsReducer.singleProduct)
+  const dispatch = useDispatch()
+
   const { id } = useParams();
 
-  const getSingleProduct = async () => {
-    await fetch(`https://dummyjson.com/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => setSingleProduct(data));
-  };
-
-  console.log(singleProduct);
 
   useEffect(() => {
     if (id) {
-      getSingleProduct();
+      dispatch(getSingleProduct(id))
     }
   }, [id]);
+
+  useEffect(()=>{
+    if(singleProductData){
+      setSingleProduct(singleProductData)
+    }
+  },[singleProductData])
 
   return (
     <div className="min-h-screen w-[95%] py-10 mx-auto">
@@ -42,7 +46,7 @@ const SingleProduct = () => {
           >
             {singleProduct.images
               ? singleProduct.images.map((img, index) => (
-                  <SwiperSlide className="flex justify-center">
+                  <SwiperSlide key={index} className="flex justify-center">
                     <img
                       width={500}
                       height={500}

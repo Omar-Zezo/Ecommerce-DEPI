@@ -12,5 +12,6 @@ import Instagram from './instagram.svg'
 import Twitter from './twitter.svg'
 import Home from './home.svg'
 import Dashboard from './dashboard.svg'
+import FilterImg from './filter.svg'
 
-export {Cart, User, Search, SearchWhite, CartWhite, Menu, Close, copyrightSign, Facebook, Instagram, Twitter, Home, UserWhite, Dashboard}
+export {Cart, User, Search, SearchWhite, CartWhite, Menu, Close, copyrightSign, Facebook, Instagram, Twitter, Home, UserWhite, Dashboard, FilterImg}

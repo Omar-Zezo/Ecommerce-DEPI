@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import ProductCard from "../Products/ProductCard";
+import { Link } from 'react-router-dom';
 
 const ProductsSlider = ({title, category}) => {
 
@@ -67,6 +68,9 @@ const ProductsSlider = ({title, category}) => {
               ))
             ):null
           }
+          <SwiperSlide>
+            <Link className='h-[500px] w-[320px] rounded-md bg-sky-800 text-xl underline text-white font-semibold flex justify-center items-center' to={`/category/${category}`}>Show More</Link>
+          </SwiperSlide>
         </Swiper>
       </div>
     </div>

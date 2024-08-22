@@ -35,10 +35,14 @@ const Navbar = ({ openSearch, searchPage }) => {
 
   useEffect(() => {
     if (authUserData) {
-      if (authUserData.data) {
-        if (authUserData.data.role === "admin") {
-          setDashboardImg(true);
+      if(authUserData.status === 200){
+        if (authUserData.data) {
+          if (authUserData.data.role === "admin") {
+            setDashboardImg(true);
+          }
         }
+      }else if(authUserData.status === 401){
+        localStorage.removeItem("token")
       }
     }
   }, [authUserData]);

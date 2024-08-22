@@ -1,5 +1,5 @@
 import { baseURL } from '../../api/baseURL'
-import {ADD_PRODUCT, EDIT_PRODUCT, GET_ALL_PRODUCTS, GET_ALL_PRODUCTS_CATEGORY, SEARCH_PRODUCTS, DELETE_PRODUCT} from '../types'
+import {ADD_PRODUCT, EDIT_PRODUCT, GET_ALL_PRODUCTS, GET_ALL_PRODUCTS_CATEGORY, SEARCH_PRODUCTS, DELETE_PRODUCT, GET_SINGLE_PRODUCT} from '../types'
 
 export const getAllProducts = (str)=> async(dispatch)=>{
     try{
@@ -59,5 +59,14 @@ export const getAllProductsByCategory = (category, str)=> async(dispatch)=>{
         dispatch({type: GET_ALL_PRODUCTS_CATEGORY, payload: res.data})
     }catch(err){
         dispatch({type: GET_ALL_PRODUCTS_CATEGORY, payload: err.response})
+    }
+}
+
+export const getSingleProduct = (id)=> async(dispatch)=>{
+    try{
+        const res = await baseURL.get(`/products/${id}`)
+        dispatch({type: GET_SINGLE_PRODUCT, payload: res.data})
+    }catch(err){
+        dispatch({type: GET_SINGLE_PRODUCT, payload: err.response})
     }
 }

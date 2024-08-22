@@ -66,7 +66,7 @@ const Categories = [
     {
         name: "laptops",
         img: Laptops,
-        path: '/laptops'
+        path: 'laptops'
     },
     {
         name: "furniture",

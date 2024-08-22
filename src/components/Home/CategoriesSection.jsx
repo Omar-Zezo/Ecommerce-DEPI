@@ -34,7 +34,7 @@ const CategoriesSection = () => {
           <SwiperSlide className="flex justify-center py-10" key={index}>
             <Link to={`/category/${cat.path}`}>
               <div className="flex flex-col gap-5 text-center">
-              <div className="xl:size-32 size-28 rounded-full shadow-md shadow-sky-300 bg-black border-2 border-sky-800 hover:border-orange-500 duration-300">
+              <div className="xl:size-32 size-28 rounded-full shadow-md shadow-sky-300 hover:shadow-orange-300 bg-black border-2 border-sky-800 hover:border-orange-500 duration-300">
               <img width={500} height={500} className="size-full object-cover rounded-full" src={cat.img} alt={cat.name}/>
               </div>
               <h4 className="text-zinc-800 hover:text-orange-500 duration-300 text-lg font-semibold capitalize">{cat.name}</h4>
