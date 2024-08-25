@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../components/Admin/sidebar";
 import { editProduct } from "../redux/actions/productsActions";
 import { toast } from 'react-toastify';
-import Notify from '../utils/Notify'
+import Notify from "../utils/Notify";
 
 const EditProduct = () => {
   const [productTitle, setProductTitle] = useState("");
@@ -90,7 +90,7 @@ const EditProduct = () => {
           />
         </form>
       </div>
-      <Notify/>
+      <Notify />
     </div>
   );
 };

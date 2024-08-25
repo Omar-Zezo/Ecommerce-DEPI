@@ -5,7 +5,7 @@ import { addProduct } from "../redux/actions/productsActions";
 import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../components/Admin/sidebar";
 import { toast } from 'react-toastify';
-import Notify from '../utils/Notify'
+import Notify from "../utils/Notify";
 
 const AddProduct = () => {
   const [productTitle, setProductTitle] = useState("");
@@ -17,7 +17,7 @@ const AddProduct = () => {
 
   const navigate = useNavigate();
 
-  const successMsg = () => toast.success("Product Add Successfully");
+  const successMsg = () => toast.success("Product Added Successfully");
   const errorMsg = () => toast.error("Product title mustn't be empty");
 
 
@@ -86,7 +86,7 @@ const AddProduct = () => {
           />
         </form>
       </div>
-      <Notify/>
+      <Notify />
     </div>
   );
 };

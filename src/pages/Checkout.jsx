@@ -21,7 +21,7 @@ const Checkout = () => {
           <h2 className="text-sky-950 text-2xl font-bold uppercase tracking-wider">
             checkout
           </h2>
-          <p className={`mt-1 text-base text-orange-500`}>
+          <p className={`mt-1 text-lg text-orange-500`}>
             complete your information
           </p>
         </div>
@@ -192,9 +192,9 @@ const Checkout = () => {
             className={`w-40 h-10 flex items-center justify-center ml-auto`}
           >
             <input
-              className={`size-full bg-sky-950 outline-none relative text-white text-sm font-medium rounded-md hover:bg-blue-500 duration-300 cursor-pointer`}
+              className={`size-full bg-sky-950 outline-none relative text-white text-base font-medium rounded-md hover:bg-orange-500 duration-300 cursor-pointer`}
               type="submit"
-              value="Create New User"
+              value="Complete Order"
             />
           </div>
         </form>

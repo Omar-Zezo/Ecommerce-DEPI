@@ -4,7 +4,6 @@ import { authUser } from "../redux/actions/authactions"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify';
-import Notify from '../utils/Notify'
 
 const Login = () => {
 
@@ -65,7 +64,6 @@ const Login = () => {
                 <input type='submit' className='bg-sky-950 hover:bg-sky-900 duration-300 font-semibold cursor-pointer text-white p-3 rounded-md outline-none' value={"Login"}/>
             </div>
         </form>
-        <Notify/>
     </div>
   )
 }

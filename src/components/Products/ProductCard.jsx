@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { CartWhite } from "../../images/svg";
 
-const ProductCard = ({ product, cardSize }) => {
+
+const ProductCard = ({ product, cardSize, handelAddToCart }) => {
 
   return (
     <div className={`${cardSize} h-[500px] relative flex-grow shadow-lg bg-white rounded-md`}>
@@ -17,6 +18,7 @@ const ProductCard = ({ product, cardSize }) => {
       </Link>
       <div
         className="w-full h-[50px] py-3 bg-sky-950 flex items-center justify-center text-white absolute left-0 top-[75%] cursor-pointer"
+        onClick={()=> handelAddToCart(product)}
       >
         <img width={25} src={CartWhite} alt="cart" loading="lazy" />
         <h5 className="ml-3 text-base font-semibold uppercase">

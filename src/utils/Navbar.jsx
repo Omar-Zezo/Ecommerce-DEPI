@@ -6,7 +6,7 @@ import { Cart, Search, User, Close, Menu, Dashboard } from "../images/svg";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthUser } from "../redux/actions/authActions";
 
-const Navbar = ({ openSearch, searchPage }) => {
+const Navbar = ({ openSearch, searchPage, cartItemsNums }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [dashboardImg, setDashboardImg] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -16,6 +16,7 @@ const Navbar = ({ openSearch, searchPage }) => {
 
   const navigate = useNavigate();
 
+  //handel search
   const onSubmit = async (e) => {
     e.preventDefault();
     if (searchValue !== "") {
@@ -56,13 +57,15 @@ const Navbar = ({ openSearch, searchPage }) => {
     }
   }, [localStorage.getItem("token")])
 
+
+
   return (
     <div className="bg-white">
       <p className="py-2 bg-sky-950 text-lg text-white font-semibold text-center uppercase">
         Free Shipping On All Orders Above $99
       </p>
       <nav className="py-3 xl:px-10 px-3 flex items-center border-b">
-        <div className="w-[20%]">
+        <div className="w-fit">
           <a href="/">
             <img width={100} src={Logo} alt="logo" />
           </a>
@@ -76,7 +79,7 @@ const Navbar = ({ openSearch, searchPage }) => {
             onClick={() => setShowMenu(true)}
           />
         </div>
-        <ul className="w-[50%] hidden xl:flex items-center justify-center gap-10">
+        <ul className="w-[50%] flex-grow hidden xl:flex items-center justify-center gap-10">
           {navLinks.map((link) => (
             <li key={link.name}>
               <NavLink
@@ -88,7 +91,7 @@ const Navbar = ({ openSearch, searchPage }) => {
             </li>
           ))}
         </ul>
-        <div className="w-[25%] xl:flex hidden justify-end items-center gap-5">
+        <div className="w-fit xl:flex hidden justify-end items-center gap-5">
           <div
             className="size-10 hover:bg-slate-100 cursor-pointer duration-300 rounded-full flex items-center justify-center"
             onClick={() => openSearch(true)}
@@ -96,18 +99,15 @@ const Navbar = ({ openSearch, searchPage }) => {
             <img width={23} src={Search} alt="search" />
           </div>
           <div className="size-10 hover:bg-slate-100 cursor-pointer duration-300 rounded-full flex items-center justify-center">
+            <Link className="relative" to={"/cart"}>
             <img width={25} src={Cart} alt="search" />
+            <span className="absolute left-[-10px] bottom-[-10px] flex justify-center items-center rounded-full text-sm font-semibold size-5 bg-orange-500 text-white">{cartItemsNums}</span>
+            </Link>
           </div>
           <div className="size-10 hover:bg-slate-100 cursor-pointer duration-300 rounded-full flex items-center justify-center">
-            {dashboardImg ? (
-              <Link to={"/admin"}>
-                <img width={25} src={Dashboard} alt="search" />
-              </Link>
-            ) : (
-              <Link to={"/login"}>
-                <img width={25} src={User} alt="search" />
-              </Link>
-            )}
+            <Link to={dashboardImg ? "/admin" : "/login"}>
+              <img width={25} src={dashboardImg ?  Dashboard: User} alt="search" />
+            </Link>
           </div>
         </div>
         {/* mobile menu */}

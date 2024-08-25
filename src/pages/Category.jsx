@@ -5,9 +5,12 @@ import { getAllProductsByCategory } from "../redux/actions/productsActions";
 import ProductCard from "../components/Products/ProductCard";
 import Filter from "../components/Products/Filter";
 import { FilterImg } from "../images/svg";
+import Spiner from "../utils/Spiner";
+import { toast } from "react-toastify";
 
 const Category = () => {
   const [allProducts, setAllProducts] = useState([]);
+  const [userCart, setUserCart] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
 
   const productsData = useSelector((state) => state.productsReducer.productsByCategory);
@@ -28,6 +31,36 @@ const Category = () => {
   }, [productsData]);
 
 
+  useEffect(() => {
+    if (localStorage.getItem("cart")) {
+      setUserCart(JSON.parse(localStorage.getItem("cart")));
+    }
+  }, [localStorage.getItem("cart")]);
+
+  const successMsg = () => toast.success("Product has been added to cart");
+
+  //handel add to cart
+  const handelAddToCart = (item) => {
+    if (userCart.length === 0) {
+      userCart.push({ ...item, quantity: 1 });
+      localStorage.setItem("cart", JSON.stringify(userCart));
+      successMsg();
+    } else {
+      let index = userCart.findIndex((obj) => obj.id === item.id);
+      if (index !== -1) {
+        userCart[index].quantity += 1;
+        localStorage.setItem("cart", JSON.stringify(userCart));
+        successMsg();
+      } else {
+        setUserCart([...userCart, { ...item, quantity: 1 }]);
+        userCart.push({ ...item, quantity: 1 });
+        localStorage.setItem("cart", JSON.stringify(userCart));
+        successMsg();
+      }
+    }
+  };
+
+
   return (
     <div className="flex justify-between w-[95%] py-10 mx-auto">
       <Filter allProducts={allProducts} setAllProducts={setAllProducts} productsData={productsData} showFilter={showFilter} setShowFilter={setShowFilter}/>
@@ -41,9 +74,13 @@ const Category = () => {
         {
           allProducts ? (
             allProducts.map((product) => (
-              <ProductCard key={product.title} cardSize="w-[280px]" product={product} />
+              <ProductCard key={product.title} handelAddToCart={handelAddToCart} cardSize="w-[280px]" product={product} />
             ))
-          ):null
+          ):(
+            <div className='flex justify-center'>
+              <Spiner/>
+            </div>
+          )
         }
       </div>
       </div>

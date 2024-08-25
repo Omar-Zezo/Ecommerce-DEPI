@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getSingleProduct } from "../redux/actions/productsActions";
-
+import { toast } from "react-toastify";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,25 +15,59 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 
 const SingleProduct = () => {
-  const [singleProduct, setSingleProduct] = useState([]);
+  const [singleProduct, setSingleProduct] = useState(null);
+  const [userCart, setUserCart] = useState([]);
 
-  const singleProductData = useSelector(state=>state.productsReducer.singleProduct)
-  const dispatch = useDispatch()
+  const singleProductData = useSelector(
+    (state) => state.productsReducer.singleProduct
+  );
+  const dispatch = useDispatch();
 
   const { id } = useParams();
 
-
   useEffect(() => {
     if (id) {
-      dispatch(getSingleProduct(id))
+      dispatch(getSingleProduct(id));
     }
   }, [id]);
 
-  useEffect(()=>{
-    if(singleProductData){
-      setSingleProduct(singleProductData)
+  useEffect(() => {
+    if (singleProductData) {
+      setSingleProduct(singleProductData);
     }
-  },[singleProductData])
+  }, [singleProductData]);
+
+
+  useEffect(() => {
+    if (localStorage.getItem("cart")) {
+      setUserCart(JSON.parse(localStorage.getItem("cart")));
+    }
+  }, [localStorage.getItem("cart")]);
+
+  const successMsg = () => toast.success("Product has been added to cart");
+
+  //handel add to cart
+  const handelAddToCart = (item) => {
+    if (userCart.length === 0) {
+      userCart.push({ ...item, quantity: 1 });
+      localStorage.setItem("cart", JSON.stringify(userCart));
+      successMsg();
+    } else {
+      let index = userCart.findIndex((obj) => obj.id === item.id);
+      if (index !== -1) {
+        userCart[index].quantity += 1;
+        localStorage.setItem("cart", JSON.stringify(userCart));
+        successMsg();
+      } else {
+        setUserCart([...userCart, { ...item, quantity: 1 }]);
+        userCart.push({ ...item, quantity: 1 });
+        localStorage.setItem("cart", JSON.stringify(userCart));
+        successMsg();
+      }
+    }
+  };
+
+
 
   return (
     <div className="min-h-screen w-[95%] py-10 mx-auto">
@@ -44,7 +78,7 @@ const SingleProduct = () => {
             modules={[Navigation]}
             className="mySwiper h-full"
           >
-            {singleProduct.images
+            {singleProduct?.images
               ? singleProduct.images.map((img, index) => (
                   <SwiperSlide key={index} className="flex justify-center">
                     <img
@@ -65,7 +99,7 @@ const SingleProduct = () => {
                 title:
               </span>
               <p className="text-xl text-zinc-800 font-medium">
-                {singleProduct.title}
+                {singleProduct?.title}
               </p>
             </li>
             <li className="w-full flex items-center gap-3">
@@ -73,7 +107,7 @@ const SingleProduct = () => {
                 category:
               </span>
               <p className="text-xl text-zinc-800 font-medium">
-                {singleProduct.category}
+                {singleProduct?.category}
               </p>
             </li>
             <li className="w-full flex items-center gap-3">
@@ -81,7 +115,7 @@ const SingleProduct = () => {
                 code:
               </span>
               <p className="text-xl text-zinc-800 font-medium">
-                {singleProduct.sku}
+                {singleProduct?.sku}
               </p>
             </li>
             <li className="w-full flex items-center gap-3">
@@ -89,7 +123,7 @@ const SingleProduct = () => {
                 availability:
               </span>
               <p className="text-xl text-zinc-800 font-medium">
-                {singleProduct.stock} in stock
+                {singleProduct?.stock} in stock
               </p>
             </li>
             <li className="w-full flex items-center gap-3">
@@ -97,7 +131,7 @@ const SingleProduct = () => {
                 price:
               </span>
               <p className="text-xl text-zinc-800 font-medium">
-                ${Math.ceil(singleProduct.price)}
+                ${Math.ceil(singleProduct?.price)}
               </p>
             </li>
             <li className="w-full flex flex-col gap-3">
@@ -105,11 +139,13 @@ const SingleProduct = () => {
                 description:
               </span>
               <p className="text-xl text-zinc-800 font-medium">
-                {singleProduct.description}
+                {singleProduct?.description}
               </p>
             </li>
           </ul>
-          <div className="w-fit mt-5 p-3 flex items-center gap-3 cursor-pointer rounded-lg bg-sky-950 hover:bg-sky-900 duration-300 text-white font-semibold uppercase">
+          <div className="w-fit mt-5 p-3 flex items-center gap-3 cursor-pointer rounded-lg bg-sky-950 hover:bg-sky-900 duration-300 text-white font-semibold uppercase"
+          onClick={()=>handelAddToCart(singleProduct)}
+          >
             add to cart
           </div>
         </div>
